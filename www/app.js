@@ -157,12 +157,25 @@ var SequenceView = _react2['default'].createClass({
         var _this2 = this;
 
         var items = _lodash2['default'].map(this.props.sequence, function (step, i) {
+            var duration = '';
+            if (step.duration) {
+                duration = _react2['default'].createElement(
+                    'span',
+                    null,
+                    '(',
+                    (step.duration / 1000).toFixed(2),
+                    ' sec)'
+                );
+            }
             return _react2['default'].createElement(
                 'li',
                 { className: i == _this2.state.index ? 'current' : '' },
                 step.command,
                 ' ',
-                step.filename
+                step.filename,
+                ' ',
+                duration,
+                ' '
             );
         });
 
@@ -230,11 +243,13 @@ function generate() {
     sequence = _lodash2['default'].map(sequence, function (s) {
         return [s, {
             command: 'rest',
-            duration: 2000
+            duration: rt.real(8000, 12000, true)
         }];
     });
 
     sequence = _lodash2['default'].flatten(sequence);
+
+    _lodash2['default'].last(sequence).duration = 10000;
 
     // prepend slides
     var beginning = [{ command: 'slide', text: 'Check if the scanner is ready' }, { command: 'slide', text: 'When ready, click Next to start' }, { command: 'rest', duration: 5000 }];
