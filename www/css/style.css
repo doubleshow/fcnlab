@@ -1,0 +1,11 @@
+div #progress{
+    height:60%;
+}
+
+.progressbar-text{
+    font-size: 50px;
+}
+
+.current {
+    background-color: yellow;
+}
